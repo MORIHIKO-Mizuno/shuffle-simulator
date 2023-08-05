@@ -1,3 +1,6 @@
+
+import random
+
 # リフルシャッフルする関数
 def riffle_shuffle(deck):
     half_size = len(deck)//2
@@ -10,6 +13,24 @@ def riffle_shuffle(deck):
     # カードの枚数が奇数だった場合
     if len(first_half) > len(second_half):
         shuffled_deck.append(first_half[-1])
+    return shuffled_deck
+
+
+# ヒンドゥーシャッフルする関数
+def hindu_shuffle(deck):
+
+    # カットの位置を決める
+    cut_positions = sorted([random.randint(1, len(deck) - 1)
+                           for i in range(5)])
+    # シャッフルの処理
+    shuffled_deck = []
+    start = 0
+    for cut_position in cut_positions:
+        end = cut_position
+        shuffled_deck = deck[start:end]+shuffled_deck
+        start = end
+    else:
+        shuffled_deck = deck[start:]+shuffled_deck
     return shuffled_deck
 
 
@@ -35,14 +56,13 @@ def return_to_original_count(card_count):
 
 # テスト用の例
 if __name__ == "__main__":
-
     deck = []
     for s in ["♠️", "♥️", "♦️", "♣️"]:
         for i in range(1, 13+1):
             deck.append(s+str(i))
-    card_count=len(deck)
+    card_count = len(deck)
 
     for i in range(return_to_original_count(card_count)):
-        deck=riffle_shuffle(deck)
+        deck = riffle_shuffle(deck)
         print(deck)
-
+    print(hindu_shuffle(deck))
